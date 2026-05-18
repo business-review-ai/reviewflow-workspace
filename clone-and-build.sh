@@ -20,14 +20,11 @@ fi
 
 echo -e "\e[36m🚀 Starting ReviewFlow AI deployment pipeline for environment: '$ENV'...\e[0m"
 
-# Get the absolute folder where this script is located
+# Get the absolute folder where this script is located (used for template copying)
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Get current folder where the user is running the script
-WORKSPACE_DIR="$(pwd)"
-
 echo "📂 Script Template Folder:  $SCRIPT_DIR"
-echo "📂 Current Working Folder:  $WORKSPACE_DIR"
+echo "📂 Current Working Folder:  $(pwd)"
 
 # -------------------------------------------------------------------------
 # 1. CLONE REPOSITORIES DIRECTLY INSIDE CURRENT FOLDER
@@ -35,9 +32,8 @@ echo "📂 Current Working Folder:  $WORKSPACE_DIR"
 REPOS=("frontend" "admin" "backend" "landing")
 
 for REPO in "${REPOS[@]}"; do
-    TARGET_DIR="$WORKSPACE_DIR/$REPO"
-    if [ -d "$TARGET_DIR" ]; then
-        echo -e "\e[32m✅ Repository '$REPO' is already present.\e[0m"
+    if [ -d "$REPO" ]; then
+        echo -e "\e[32m✅ Repository '$REPO' is already present in current folder.\e[0m"
     else
         if [[ "$ENV" == "local" ]]; then
             CLONE_URL="https://github.com/business-review-ai/$REPO.git"
@@ -46,14 +42,14 @@ for REPO in "${REPOS[@]}"; do
             CLONE_URL="git@github.com:business-review-ai/$REPO.git"
             echo -e "\e[33m🔑 Cloning repository '$REPO' via SSH (non-local environment)...\e[0m"
         fi
-        git clone "$CLONE_URL" "$TARGET_DIR"
+        git clone "$CLONE_URL"
     fi
 done
 
 # -------------------------------------------------------------------------
 # 2. INITIALIZE AND VALIDATE ENVIRONMENT VARIABLE CONFIGURATION
 # -------------------------------------------------------------------------
-ENV_DIR="$WORKSPACE_DIR/$ENV"
+ENV_DIR="./$ENV"
 
 # If environment folder is not in current working folder, copy the template from the script directory
 if [ ! -d "$ENV_DIR" ]; then
