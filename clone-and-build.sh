@@ -36,8 +36,14 @@ for REPO in "${REPOS[@]}"; do
     if [ -d "$TARGET_DIR" ]; then
         echo -e "\e[32m✅ Repository '$REPO' is already present.\e[0m"
     else
-        echo -e "\e[33m📦 Cloning repository '$REPO'...\e[0m"
-        git clone "https://github.com/business-review-ai/$REPO.git" "$TARGET_DIR"
+        if [[ "$ENV" == "local" ]]; then
+            CLONE_URL="https://github.com/business-review-ai/$REPO.git"
+            echo -e "\e[33m📦 Cloning repository '$REPO' via HTTPS (local environment)...\e[0m"
+        else
+            CLONE_URL="git@github.com:business-review-ai/$REPO.git"
+            echo -e "\e[33m🔑 Cloning repository '$REPO' via SSH (non-local environment)...\e[0m"
+        fi
+        git clone "$CLONE_URL" "$TARGET_DIR"
     fi
 done
 
