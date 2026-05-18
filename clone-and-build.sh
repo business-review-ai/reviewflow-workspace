@@ -20,18 +20,18 @@ fi
 
 echo -e "\e[36m🚀 Starting ReviewFlow AI deployment pipeline for environment: '$ENV'...\e[0m"
 
-# Get current script folder
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# Get current folder where the user is running the script
+WORKSPACE_DIR="$(pwd)"
 
-echo "📂 Onboarding Folder Workspace: $SCRIPT_DIR"
+echo "📂 Current Working Folder: $WORKSPACE_DIR"
 
 # -------------------------------------------------------------------------
-# 1. CLONE REPOSITORIES DIRECTLY INSIDE ONBOARD FOLDER
+# 1. CLONE REPOSITORIES DIRECTLY INSIDE CURRENT FOLDER
 # -------------------------------------------------------------------------
 REPOS=("frontend" "admin" "backend" "landing")
 
 for REPO in "${REPOS[@]}"; do
-    TARGET_DIR="$SCRIPT_DIR/$REPO"
+    TARGET_DIR="$WORKSPACE_DIR/$REPO"
     if [ -d "$TARGET_DIR" ]; then
         echo -e "\e[32m✅ Repository '$REPO' is already present.\e[0m"
     else
@@ -49,7 +49,7 @@ done
 # -------------------------------------------------------------------------
 # 2. VALIDATE ENVIRONMENT VARIABLE CONFIGURATION
 # -------------------------------------------------------------------------
-ENV_DIR="$SCRIPT_DIR/$ENV"
+ENV_DIR="$WORKSPACE_DIR/$ENV"
 ENV_FILE="$ENV_DIR/.env"
 
 if [ ! -f "$ENV_FILE" ]; then
@@ -63,8 +63,6 @@ fi
 # -------------------------------------------------------------------------
 # 3. BUILD AND RUN ENVIRONMENT DOCKER COMPOSE
 # -------------------------------------------------------------------------
-ENV_DIR="$SCRIPT_DIR/$ENV"
-
 if [ -d "$ENV_DIR" ]; then
     echo -e "\e[36m🐳 Launching docker-compose in '$ENV' subfolder...\e[0m"
     cd "$ENV_DIR"
