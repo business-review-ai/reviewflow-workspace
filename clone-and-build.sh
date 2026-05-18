@@ -20,10 +20,14 @@ fi
 
 echo -e "\e[36m🚀 Starting ReviewFlow AI deployment pipeline for environment: '$ENV'...\e[0m"
 
+# Get the absolute folder where this script is located
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # Get current folder where the user is running the script
 WORKSPACE_DIR="$(pwd)"
 
-echo "📂 Current Working Folder: $WORKSPACE_DIR"
+echo "📂 Script Template Folder:  $SCRIPT_DIR"
+echo "📂 Current Working Folder:  $WORKSPACE_DIR"
 
 # -------------------------------------------------------------------------
 # 1. CLONE REPOSITORIES DIRECTLY INSIDE CURRENT FOLDER
@@ -47,9 +51,17 @@ for REPO in "${REPOS[@]}"; do
 done
 
 # -------------------------------------------------------------------------
-# 2. VALIDATE ENVIRONMENT VARIABLE CONFIGURATION
+# 2. INITIALIZE AND VALIDATE ENVIRONMENT VARIABLE CONFIGURATION
 # -------------------------------------------------------------------------
 ENV_DIR="$WORKSPACE_DIR/$ENV"
+
+# If environment folder is not in current working folder, copy the template from the script directory
+if [ ! -d "$ENV_DIR" ]; then
+    echo -e "\e[33m📂 Initializing '$ENV' configuration folder in the current directory...\e[0m"
+    mkdir -p "$ENV_DIR"
+    cp -r "$SCRIPT_DIR/$ENV/." "$ENV_DIR/"
+fi
+
 ENV_FILE="$ENV_DIR/.env"
 
 if [ ! -f "$ENV_FILE" ]; then
