@@ -20,19 +20,18 @@ fi
 
 echo -e "\e[36m🚀 Starting ReviewFlow AI deployment pipeline for environment: '$ENV'...\e[0m"
 
-# Get current script folder and parent workspace folder
+# Get current script folder
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PARENT_DIR="$( cd "$SCRIPT_DIR/.." && pwd )"
 
-echo "📂 Project Parent Workspace: $PARENT_DIR"
+echo "📂 Onboarding Folder Workspace: $SCRIPT_DIR"
 
 # -------------------------------------------------------------------------
-# 1. CLONE SIDE-BY-SIDE REPOSITORIES
+# 1. CLONE REPOSITORIES DIRECTLY INSIDE ONBOARD FOLDER
 # -------------------------------------------------------------------------
 REPOS=("frontend" "admin" "backend" "landing")
 
 for REPO in "${REPOS[@]}"; do
-    TARGET_DIR="$PARENT_DIR/$REPO"
+    TARGET_DIR="$SCRIPT_DIR/$REPO"
     if [ -d "$TARGET_DIR" ]; then
         echo -e "\e[32m✅ Repository '$REPO' is already present.\e[0m"
     else

@@ -16,28 +16,28 @@ if (!(Get-Command docker -ErrorAction SilentlyContinue)) {
 
 # 2. Install Dependencies
 Write-Host "📦 Installing Frontend dependencies..." -ForegroundColor Yellow
-if (Test-Path "../frontend") {
-    cd ../frontend
+if (Test-Path "./frontend") {
+    cd ./frontend
     npm install
-    cd ../onboard
+    cd ..
 } else {
     Write-Host "⚠️ Frontend repository not found." -ForegroundColor Red
 }
 
 Write-Host "📦 Installing Admin dependencies..." -ForegroundColor Yellow
-if (Test-Path "../admin") {
-    cd ../admin
+if (Test-Path "./admin") {
+    cd ./admin
     npm install
-    cd ../onboard
+    cd ..
 } else {
     Write-Host "⚠️ Admin repository not found." -ForegroundColor Red
 }
 
 Write-Host "📦 Installing Backend dependencies..." -ForegroundColor Yellow
-if (Test-Path "../backend") {
-    cd ../backend
+if (Test-Path "./backend") {
+    cd ./backend
     npm install
-    cd ../onboard
+    cd ..
 } else {
     Write-Host "⚠️ Backend repository not found." -ForegroundColor Red
 }
@@ -72,8 +72,8 @@ VAPID_PRIVATE_KEY="oEokC_dJ_etRzmA6w9SMQtFDvmnx4Frx9m1MJnHGf9Q"
 }
 
 # Copy to backend/.env as a host convenience for IDE/Prisma tooling
-if (!(Test-Path "../backend/.env")) {
-    Copy-Item "./local/.env" "../backend/.env"
+if (!(Test-Path "./backend/.env")) {
+    Copy-Item "./local/.env" "./backend/.env"
 }
 
 # 4. Start Docker Containers
@@ -86,10 +86,10 @@ Start-Sleep -Seconds 10
 
 # 5. Initialize Database
 Write-Host "🗄️ Initializing database schema..." -ForegroundColor Yellow
-if (Test-Path "../backend") {
-    cd ../backend
+if (Test-Path "./backend") {
+    cd ./backend
     npx prisma db push
-    cd ../onboard
+    cd ..
 }
 
 Write-Host "`n✅ Setup Complete!" -ForegroundColor Green

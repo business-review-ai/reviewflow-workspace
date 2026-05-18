@@ -15,7 +15,11 @@ echo "🛠️ Target Repository: $REPO"
 echo "⚙️ Deployment Environment: $ENV"
 
 # 1. Pull latest code from SSH
-cd "$WORKSPACE_DIR/$REPO"
+if [[ "$REPO" == "onboard" ]]; then
+    cd "$WORKSPACE_DIR/onboard"
+else
+    cd "$WORKSPACE_DIR/onboard/$REPO"
+fi
 echo "🔄 Checking out and pulling master branch..."
 git checkout master
 git pull origin master
