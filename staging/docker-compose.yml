@@ -4,7 +4,7 @@ services:
   frontend:
     container_name: reviewflow-frontend
     build:
-      context: ../../frontend
+      context: ../frontend
       dockerfile: Dockerfile
     restart: always
     environment:
@@ -17,7 +17,7 @@ services:
   admin:
     container_name: reviewflow-admin
     build:
-      context: ../../admin
+      context: ../admin
       dockerfile: Dockerfile
     restart: always
     environment:
@@ -30,7 +30,7 @@ services:
   backend:
     container_name: reviewflow-backend
     build:
-      context: ../../backend
+      context: ../backend
       dockerfile: Dockerfile
     restart: always
     env_file:
