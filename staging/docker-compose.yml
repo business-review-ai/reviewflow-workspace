@@ -50,7 +50,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=reviewflow_staging
+      - POSTGRES_DB=reviewflow
     volumes:
       - postgres_staging_data:/var/lib/postgresql/data
     networks:
