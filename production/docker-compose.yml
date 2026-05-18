@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   frontend:
-    container_name: frontend
+    container_name: reviewflow-frontend
     build:
       context: ../../frontend
       dockerfile: Dockerfile
@@ -15,7 +15,7 @@ services:
       - backend
 
   admin:
-    container_name: admin
+    container_name: reviewflow-admin
     build:
       context: ../../admin
       dockerfile: Dockerfile
@@ -28,7 +28,7 @@ services:
       - backend
 
   backend:
-    container_name: backend
+    container_name: reviewflow-backend
     build:
       context: ../../backend
       dockerfile: Dockerfile
