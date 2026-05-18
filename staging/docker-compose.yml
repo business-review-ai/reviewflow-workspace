@@ -4,11 +4,9 @@ services:
   frontend:
     container_name: reviewflow-frontend-staging
     build:
-      context: ../frontend
+      context: ../../frontend
       dockerfile: Dockerfile
     restart: always
-    ports:
-      - "4000:80"
     environment:
       - NODE_ENV=staging
     networks:
@@ -19,11 +17,9 @@ services:
   admin:
     container_name: reviewflow-admin-staging
     build:
-      context: ../admin
+      context: ../../admin
       dockerfile: Dockerfile
     restart: always
-    ports:
-      - "4001:80"
     environment:
       - NODE_ENV=staging
     networks:
@@ -34,11 +30,9 @@ services:
   backend:
     container_name: reviewflow-backend-staging
     build:
-      context: ../backend
+      context: ../../backend
       dockerfile: Dockerfile
     restart: always
-    ports:
-      - "6000:5000"
     env_file:
       - .env
     environment:
@@ -57,8 +51,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=reviewflow_staging
-    ports:
-      - "5433:5432"
     volumes:
       - postgres_staging_data:/var/lib/postgresql/data
     networks:
