@@ -43,12 +43,17 @@ if (Test-Path "../backend") {
 }
 
 # 3. Setup Environment Variables
-if (!(Test-Path "../backend/.env")) {
-    Write-Host "📝 Creating default backend/.env file..." -ForegroundColor Yellow
+if (!(Test-Path "./local/.env")) {
+    Write-Host "📝 Creating default local/.env file..." -ForegroundColor Yellow
     $envContent = @"
+# =========================================================================
+# REVIEWFLOW AI - LOCAL ENVIRONMENT CONFIGURATION
+# =========================================================================
+
 PORT=5000
+NODE_ENV=local
 DATABASE_URL="postgresql://postgres:postgres@db:5432/reviewflow?schema=public"
-JWT_SECRET="supersecretjwtkey_`$(Get-Random)"
+JWT_SECRET="supersecretjwtkey_localdefaultsecret"
 
 # OpenCode AI API Configuration
 OPENAI_API_KEY="sk-xZBhP6XSw5QjM8ZrIwhcR2tOZ4cFw0U2ZGKARYTXfO6xTJYWOzEtlFC9HK0LDc2Y"
@@ -63,7 +68,12 @@ RAZORPAY_KEY_SECRET="secret_placeholder"
 VAPID_PUBLIC_KEY="BNP0BCNJRETiut5WhyZlv1cJ1TaH30bntlL1i89XnU4m5dq67ZWlAmf7qVvn-JrEB9qJKHGC79B3B35W74AQZtA"
 VAPID_PRIVATE_KEY="oEokC_dJ_etRzmA6w9SMQtFDvmnx4Frx9m1MJnHGf9Q"
 "@
-    $envContent | Out-File -FilePath "../backend/.env" -Encoding utf8
+    $envContent | Out-File -FilePath "./local/.env" -Encoding utf8
+}
+
+# Copy to backend/.env as a host convenience for IDE/Prisma tooling
+if (!(Test-Path "../backend/.env")) {
+    Copy-Item "./local/.env" "../backend/.env"
 }
 
 # 4. Start Docker Containers

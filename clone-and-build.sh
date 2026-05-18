@@ -48,42 +48,17 @@ for REPO in "${REPOS[@]}"; do
 done
 
 # -------------------------------------------------------------------------
-# 2. SETUP ENVIRONMENT VARIABLE TEMPLATES
+# 2. VALIDATE ENVIRONMENT VARIABLE CONFIGURATION
 # -------------------------------------------------------------------------
-if [[ "$ENV" == "local" ]]; then
-    if [ ! -f "$PARENT_DIR/backend/.env" ]; then
-        echo "📝 Initializing local environment file (backend/.env)..."
-        cat <<EOT > "$PARENT_DIR/backend/.env"
-PORT=5000
-DATABASE_URL="postgresql://postgres:postgres@db:5432/reviewflow?schema=public"
-JWT_SECRET="supersecretjwtkey_$(openssl rand -hex 12 2>/dev/null || echo 'localdefaultsecret')"
-OPENAI_API_KEY="sk-xZBhP6XSw5QjM8ZrIwhcR2tOZ4cFw0U2ZGKARYTXfO6xTJYWOzEtlFC9HK0LDc2Y"
-OPENAI_BASE_URL="https://api.opencode.ai/v1"
-OPENAI_MODEL="MiniMax M2.5 Free"
-EOT
-    fi
+ENV_DIR="$SCRIPT_DIR/$ENV"
+ENV_FILE="$ENV_DIR/.env"
 
-elif [[ "$ENV" == "staging" ]]; then
-    if [ ! -f "$PARENT_DIR/backend/.env.staging" ]; then
-        echo "📝 Initializing staging environment file (backend/.env.staging)..."
-        if [ -f "$PARENT_DIR/backend/.env.staging.example" ]; then
-            cp "$PARENT_DIR/backend/.env.staging.example" "$PARENT_DIR/backend/.env.staging"
-            echo -e "\e[33m⚠️ Staging file copied from template. Please configure actual staging secrets inside backend/.env.staging\e[0m"
-        else
-            echo "❌ Warning: staging template not found. Please configure backend/.env.staging manually."
-        fi
-    fi
-
-elif [[ "$ENV" == "production" ]]; then
-    if [ ! -f "$PARENT_DIR/backend/.env.prod" ]; then
-        echo "📝 Initializing production environment file (backend/.env.prod)..."
-        if [ -f "$PARENT_DIR/backend/.env.prod.example" ]; then
-            cp "$PARENT_DIR/backend/.env.prod.example" "$PARENT_DIR/backend/.env.prod"
-            echo -e "\e[31m⚠️ Production file copied from template. Please configure live credentials inside backend/.env.prod!\e[0m"
-        else
-            echo "❌ Warning: production template not found. Please configure backend/.env.prod manually."
-        fi
-    fi
+if [ ! -f "$ENV_FILE" ]; then
+    echo -e "\e[31m❌ Error: Environment file missing at '$ENV_FILE'\e[0m"
+    echo "Please create a secure '.env' file in '$ENV_DIR' before launching."
+    exit 1
+else
+    echo -e "\e[32m✅ Environment configuration file found at '$ENV_FILE'.\e[0m"
 fi
 
 # -------------------------------------------------------------------------
