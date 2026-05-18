@@ -15,10 +15,10 @@ echo "🛠️ Target Repository: $REPO"
 echo "⚙️ Deployment Environment: $ENV"
 
 # 1. Pull latest code from SSH
-if [[ "$REPO" == "onboard" ]]; then
-    cd "$WORKSPACE_DIR/onboard"
+if [[ "$REPO" == "reviewflow-workspace" ]]; then
+    cd "$WORKSPACE_DIR/reviewflow-workspace"
 else
-    cd "$WORKSPACE_DIR/onboard/$REPO"
+    cd "$WORKSPACE_DIR/reviewflow-workspace/$REPO"
 fi
 echo "🔄 Checking out and pulling master branch..."
 git checkout master
@@ -26,7 +26,7 @@ git pull origin master
 
 # 2. Rebuild only the changed container in Docker Compose
 echo "🐳 Rebuilding target microservice container in '$ENV' environment..."
-cd "$WORKSPACE_DIR/onboard/$ENV"
+cd "$WORKSPACE_DIR/reviewflow-workspace/$ENV"
 
 # Re-launch docker-compose build strictly for the updated repository service
 if [[ "$REPO" == "backend" ]]; then
@@ -38,8 +38,8 @@ elif [[ "$REPO" == "admin" ]]; then
     docker-compose up -d --build admin
 elif [[ "$REPO" == "landing" ]]; then
     docker-compose up -d --build landing
-elif [[ "$REPO" == "onboard" ]]; then
-    echo "📦 Onboarding configurations updated. Re-launching stack..."
+elif [[ "$REPO" == "reviewflow-workspace" ]]; then
+    echo "📦 Workspace configurations updated. Re-launching stack..."
     docker-compose up -d --build
 else
     echo "⚠️ Unknown service matching repo '$REPO'. Rebuilding entire compose stack..."

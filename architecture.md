@@ -5,9 +5,9 @@ The system is divided into multiple repositories under the `business-review-ai` 
 
 ## Repositories
 
-1. **[onboard](https://github.com/business-review-ai/onboard)**
+1. **[reviewflow-workspace](https://github.com/business-review-ai/reviewflow-workspace)**
    - Contains setup scripts, Docker Compose files, and system-wide documentation.
-   - Used for quick onboarding and local development of the entire stack.
+   - Used for quick onboarding and development of the entire stack.
 
 2. **[frontend](https://github.com/business-review-ai/frontend)**
    - The main consumer-facing application where users submit reviews.
@@ -29,7 +29,7 @@ The system is divided into multiple repositories under the `business-review-ai` 
 ## Infrastructure & Deployment
 
 - **Database:** PostgreSQL used for persistent storage.
-- **Local Dev:** Handled via Docker Compose in the `onboard` repo.
+- **Local Dev:** Handled via Docker Compose in the `reviewflow-workspace` repo.
 - **Production:** Recommended to use managed PostgreSQL and deploy services via Docker containers to a cloud provider (e.g., AWS, GCP, Vercel for frontends).
 
 ## Communication Flow

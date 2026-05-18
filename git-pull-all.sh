@@ -16,10 +16,15 @@ echo -e "\e[36m🔄 Fetching and pulling branch '$BRANCH' across all microservic
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PARENT_DIR="$( cd "$SCRIPT_DIR/.." && pwd )"
 
-REPOS=("onboard" "frontend" "admin" "backend" "landing")
+REPOS=("reviewflow-workspace" "frontend" "admin" "backend" "landing")
 
 for REPO in "${REPOS[@]}"; do
-    TARGET_DIR="$PARENT_DIR/$REPO"
+    if [[ "$REPO" == "reviewflow-workspace" ]]; then
+        TARGET_DIR="$SCRIPT_DIR"
+    else
+        TARGET_DIR="$SCRIPT_DIR/$REPO"
+    fi
+    
     if [ -d "$TARGET_DIR" ]; then
         echo -e "\e[33m📂 Navigating to '$REPO'...\e[0m"
         cd "$TARGET_DIR"

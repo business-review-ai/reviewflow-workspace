@@ -51,7 +51,7 @@ const server = http.createServer((req, res) => {
         console.log(`🚀 Starting automated deployment for '${repoName}' in '${ENV}' mode...`);
         
         // Execute self-contained deploy shell script
-        const deployCmd = `bash "${WORKSPACE_DIR}/onboard/webhook/deploy.sh" "${repoName}" "${ENV}"`;
+        const deployCmd = `bash "${WORKSPACE_DIR}/reviewflow-workspace/webhook/deploy.sh" "${repoName}" "${ENV}"`;
         exec(deployCmd, (error, stdout, stderr) => {
           if (error) {
             console.error(`❌ Deployment failed: ${error.message}`);

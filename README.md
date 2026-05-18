@@ -1,7 +1,7 @@
-# ReviewFlow AI - Onboard
+# ReviewFlow AI - Workspace
 
-Welcome to ReviewFlow AI! This repository is your starting point for local development. 
-It contains the necessary scripts and configurations to spin up the entire microservices architecture on your machine.
+Welcome to ReviewFlow AI! This repository is your starting point for development. 
+It contains the necessary scripts, environment orchestrations, webhook deployments, and documentation to manage the entire microservices architecture.
 
 ## Prerequisites
 
@@ -11,25 +11,19 @@ It contains the necessary scripts and configurations to spin up the entire micro
 
 ## Setup Instructions
 
-To get started with local development, follow these steps:
+To get started with development, follow these steps:
 
-1. **Clone all repositories** into the same parent folder so they sit side-by-side:
+1. **Clone this workspace repository**:
    ```bash
-   mkdir business-review-ai
-   cd business-review-ai
-
-   git clone https://github.com/business-review-ai/onboard.git
-   git clone https://github.com/business-review-ai/frontend.git
-   git clone https://github.com/business-review-ai/admin.git
-   git clone https://github.com/business-review-ai/backend.git
-   git clone https://github.com/business-review-ai/landing.git
+   git clone https://github.com/business-review-ai/reviewflow-workspace.git
+   cd reviewflow-workspace
    ```
 
 2. **Run the setup script**:
    ```bash
-   cd onboard
-   ./setup.ps1
+   ./clone-and-build.sh local
    ```
+   *(Or run `./setup.ps1` on Windows to initialize packages and databases)*
    *Note: If you are not on Windows, you can use `docker-compose up -d --build` directly and run `npm install` in each respective folder.*
 
 3. **Access the services**:
