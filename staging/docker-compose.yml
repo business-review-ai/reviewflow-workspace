@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  frontend:
+    container_name: reviewflow-frontend-staging
+    build:
+      context: ../../frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "4000:80"
+    environment:
+      - NODE_ENV=staging
+    depends_on:
+      - backend
+
+  admin:
+    container_name: reviewflow-admin-staging
+    build:
+      context: ../../admin
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "4001:80"
+    environment:
+      - NODE_ENV=staging
+    depends_on:
+      - backend
+
+  backend:
+    container_name: reviewflow-backend-staging
+    build:
+      context: ../../backend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "6000:5000"
+    env_file:
+      - ../../backend/.env.staging
+    environment:
+      - NODE_ENV=staging
+      - PORT=5000
+    depends_on:
+      - db
+
+  db:
+    container_name: reviewflow-db-staging
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=reviewflow_staging
+    ports:
+      - "5433:5432" # Uses a separate port from local and prod
+    volumes:
+      - postgres_staging_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_staging_data:

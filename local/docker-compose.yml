@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  frontend:
+    container_name: reviewflow-frontend-local
+    build:
+      context: ../../frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  admin:
+    container_name: reviewflow-admin-local
+    build:
+      context: ../../admin
+      dockerfile: Dockerfile
+    ports:
+      - "3001:80"
+    depends_on:
+      - backend
+
+  backend:
+    container_name: reviewflow-backend-local
+    build:
+      context: ../../backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    env_file:
+      - ../../backend/.env
+    depends_on:
+      - db
+    
+  db:
+    container_name: reviewflow-db-local
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=reviewflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

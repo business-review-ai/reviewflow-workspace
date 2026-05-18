@@ -68,8 +68,8 @@ VAPID_PRIVATE_KEY="oEokC_dJ_etRzmA6w9SMQtFDvmnx4Frx9m1MJnHGf9Q"
 
 # 4. Start Docker Containers
 Write-Host "🐳 Starting Docker containers..." -ForegroundColor Yellow
-docker-compose down -v
-docker-compose up -d --build
+docker-compose -f ./local/docker-compose.yml down -v
+docker-compose -f ./local/docker-compose.yml up -d --build
 
 Write-Host "⏳ Waiting for database to be ready..." -ForegroundColor Yellow
 Start-Sleep -Seconds 10
