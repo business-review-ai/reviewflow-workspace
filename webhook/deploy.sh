@@ -20,9 +20,9 @@ if [[ "$REPO" == "reviewflow-workspace" ]]; then
 else
     cd "$WORKSPACE_DIR/reviewflow-workspace/$REPO"
 fi
-echo "🔄 Checking out and pulling master branch..."
-git checkout master
-git pull origin master
+echo "🔄 Checking out and pulling main branch..."
+git checkout main
+git pull origin main
 
 # 2. Rebuild only the changed container in Docker Compose
 echo "🐳 Rebuilding target microservice container in '$ENV' environment..."

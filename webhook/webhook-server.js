@@ -43,8 +43,8 @@ const server = http.createServer((req, res) => {
       
       console.log(`📡 Webhook received from repo: '${repoName}' on branch: '${branch}'`);
       
-      // Auto-deploy strictly on push events to the 'master' branch
-      if (branch === 'refs/heads/master') {
+      // Auto-deploy strictly on push events to the 'main' branch
+      if (branch === 'refs/heads/main') {
         res.writeHead(202, { 'Content-Type': 'text/plain' });
         res.end('Deployment triggered');
         

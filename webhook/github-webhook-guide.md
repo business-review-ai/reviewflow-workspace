@@ -2,7 +2,7 @@
 
 This guide describes how to configure and deploy a secure, automated GitHub Webhook listener on your staging and production servers to achieve **100% automated CI/CD**. 
 
-Whenever you push latest commits to the `master` branch of `frontend`, `admin`, `backend`, `landing`, or `onboard`, the listener will automatically verify the signature, pull the latest files using SSH, and trigger a lightweight `docker-compose` rebuild strictly for the modified container.
+Whenever you push latest commits to the `main` branch of `frontend`, `admin`, `backend`, `landing`, or `onboard`, the listener will automatically verify the signature, pull the latest files using SSH, and trigger a lightweight `docker-compose` rebuild strictly for the modified container.
 
 ---
 
@@ -107,17 +107,17 @@ sudo systemctl reload nginx
 
 ## 🔄 Step 6: Test the Integration!
 
-1. Make a small code adjustment on the `master` branch of your repository.
-2. Push to GitHub: `git push origin master`.
+1. Make a small code adjustment on the `main` branch of your repository.
+2. Push to GitHub: `git push origin main`.
 3. Check the PM2 logs on your server:
    ```bash
    pm2 logs reviewflow-webhook
    ```
 4. You will see:
    ```
-   📡 Webhook received from repo: 'frontend' on branch: 'refs/heads/master'
+   📡 Webhook received from repo: 'frontend' on branch: 'refs/heads/main'
    🚀 Starting automated deployment for 'frontend' in 'production' mode...
-   🔄 Checking out and pulling master branch...
+   🔄 Checking out and pulling main branch...
    🐳 Rebuilding target microservice container in 'production' environment...
    🎉 Deployment for service 'frontend' completed successfully!
    ```
